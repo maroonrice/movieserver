@@ -25,6 +25,7 @@ CLIENT_ID = config_ini.get('DEFAULT', 'CLIENT_ID')
 CLIENT_SECRET = config_ini.get('DEFAULT', 'CLIENT_SECRET')
 MOVIE_FILE_DIR=config_ini.get('DEFAULT', 'MOVIE_FILE_DIR')
 WELL_KNOWN_DIR=config_ini.get('DEFAULT', 'WELL_KNOWN_DIR')
+SERVER_PORT=config_ini.getint('DEFAULT', 'SERVER_PORT')
 
 mimetypes.add_type('text/javascript', '.js')
 
@@ -145,4 +146,4 @@ def api_session():
     return {'name': session['name']}, 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=9081, threaded=True)
+    app.run(host="0.0.0.0", port=SERVER_PORT, threaded=True)
