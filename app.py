@@ -23,6 +23,7 @@ SESSION_EXPIRE_SECOND = 43200
 SESSION_UPDATE_SECOND = 21600
 CLIENT_ID = config_ini.get('DEFAULT', 'CLIENT_ID')
 CLIENT_SECRET = config_ini.get('DEFAULT', 'CLIENT_SECRET')
+MOVIE_FILE_DIR='file'
 
 mimetypes.add_type('text/javascript', '.js')
 
@@ -46,6 +47,10 @@ def updateSession(name = None):
         if name != None:
             session['name'] = name
 
+@app.route('/', methods=['GET'])
+def root():
+    return redirect('/page/login/index.html')
+
 @app.route('/page/<path:subpath>', methods=['GET'])
 def page(subpath):
     mimetype, _ = mimetypes.guess_type(subpath)
@@ -62,10 +67,10 @@ def file_with_session(subpath):
     if not checkSession():
         return None, 403
     mimetype, _ = mimetypes.guess_type(subpath)
-    return send_file('file/' + subpath, mimetype=mimetype)
+    return send_file(os.path.join(MOVIE_FILE_DIR, subpath), mimetype=mimetype)
 
 def movieinfo(dirname: str) -> dict:
-    image = os.path.join('file', dirname, 'thumb.png')
+    image = os.path.join(MOVIE_FILE_DIR, dirname, 'thumb.png')
     base = '/file/' + urllib.parse.quote(dirname)
     if os.path.isfile(image):
         return {'name': dirname, 'image': base + '/thumb.png', 'path': base + '/video.m3u8'}
@@ -75,8 +80,8 @@ def movieinfo(dirname: str) -> dict:
 def api_files():
     if not checkSession():
         return {}, 403
-    files = os.listdir('file')
-    return [movieinfo(f) for f in files if os.path.isdir(os.path.join('file',f))]
+    files = os.listdir(MOVIE_FILE_DIR)
+    return [movieinfo(f) for f in files if os.path.isdir(os.path.join(MOVIE_FILE_DIR, f))]
 
 @app.route('/api/login', methods=['GET'])
 def api_login():
