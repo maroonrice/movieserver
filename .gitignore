@@ -2,3 +2,4 @@ file
 .pytest_cache
 config.ini
 .well-known
+cert

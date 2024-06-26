@@ -5,10 +5,13 @@ import { onMounted } from 'vue'
 onMounted(() => {
   const videoSrc = location.hash.substring(1)
   const video = document.getElementsByTagName('video')[0]
-  if (video.canPlayType('application/vnd.apple.mpegurl')) {
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
     video.src = videoSrc; //iOS等
-  } else if (Hls.isSupported()) {
-    var hls = new Hls(); hls.loadSource(videoSrc); hls.attachMedia(video);
+    video.load()
   }
 })
 </script>
