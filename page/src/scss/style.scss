@@ -1,0 +1,16 @@
+@import "bootstrap/scss/bootstrap";
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+body {
+  background-color: rgba(235,213,250,1);
+}
+
+.btn-kanon {
+  background-color: white;
+  color: #ff791b;
+  border-color: #ff791b;
+  &:hover, &:focus {
+    background-color: #ff791b;
+    color: white;
+  }
+}
