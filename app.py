@@ -23,7 +23,8 @@ SESSION_EXPIRE_SECOND = 43200
 SESSION_UPDATE_SECOND = 21600
 CLIENT_ID = config_ini.get('DEFAULT', 'CLIENT_ID')
 CLIENT_SECRET = config_ini.get('DEFAULT', 'CLIENT_SECRET')
-MOVIE_FILE_DIR='file'
+MOVIE_FILE_DIR=config_ini.get('DEFAULT', 'MOVIE_FILE_DIR')
+WELL_KNOWN_DIR=config_ini.get('DEFAULT', 'WELL_KNOWN_DIR')
 
 mimetypes.add_type('text/javascript', '.js')
 
@@ -60,6 +61,11 @@ def page(subpath):
 def assets(subpath):
     mimetype, _ = mimetypes.guess_type(subpath)
     return send_file('page/dist/assets/' + subpath, mimetype=mimetype)
+
+@app.route('/.well-known/<path:subpath>', methods=['GET'])
+def well_known(subpath):
+    mimetype, _ = mimetypes.guess_type(subpath)
+    return send_file(os.path.join(WELL_KNOWN_DIR, subpath), mimetype=mimetype)
 
 
 @app.route('/file/<path:subpath>', methods=['GET'])
