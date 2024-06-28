@@ -14,16 +14,16 @@ import configparser
 
 app = Flask(__name__, static_folder=None)
 app.config['JSON_AS_ASCII'] = False
-app.secret_key = secrets.token_hex()
 
 config_ini = configparser.ConfigParser()
-config_ini.read('config.ini', encoding='utf-8')
+config_ini.read(os.path.join(os.path.dirname(__file__), 'config.ini'), encoding='utf-8')
 
 SESSION_EXPIRE_SECOND = 43200
 SESSION_UPDATE_SECOND = 21600
 CLIENT_ID = config_ini.get('DEFAULT', 'CLIENT_ID')
 CLIENT_SECRET = config_ini.get('DEFAULT', 'CLIENT_SECRET')
 MOVIE_FILE_DIR=config_ini.get('DEFAULT', 'MOVIE_FILE_DIR')
+app.secret_key = config_ini.get('DEFAULT', 'SECRET_KEY')
 
 mimetypes.add_type('text/javascript', '.js')
 
