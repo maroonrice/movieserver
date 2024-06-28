@@ -116,7 +116,10 @@ def api_landing():
     json = response.json()
     id_token = json['id_token']
     decoded = verify_jwt(id_token)
-    updateSession(decoded['email'])
+    email:str = decoded['email']
+    if not verify_email(email):
+        return redirect('/page/error/index.html?message=' + urllib.parse.quote('認証エラーです。許可されていないユーザです。'))
+    updateSession(email)
     return redirect('/page/list/index.html')
 
 def verify_jwt(id_token):
@@ -130,6 +133,13 @@ def verify_jwt(id_token):
     pem = public_key.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo)
     decoded = jwt.decode(id_token, pem, algorithms=['RS256'], audience=CLIENT_ID)
     return dict({(key, decoded.get(key)) for key in decoded.keys()})
+
+def verify_email(email: str):
+    with open(os.path.join(os.path.dirname(__file__), 'allow.txt')) as f:
+        for line in f:
+            if line.strip() == email:
+                return True
+    return False
 
 @app.route('/api/session', methods=['GET'])
 def api_session():

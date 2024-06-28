@@ -3,3 +3,4 @@ file
 config.ini
 .well-known
 cert
+allow.txt

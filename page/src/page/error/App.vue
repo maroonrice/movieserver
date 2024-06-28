@@ -14,7 +14,7 @@ import { onMounted, ref } from 'vue'
 const message = ref("")
 onMounted(() => {
   location.search.substring(1).split("&").map(kv => kv.split("=")).filter(kv => kv.length == 2).filter(kv => kv[0] == 'message').forEach((v) => {
-    message.value = v[1]
+    message.value = decodeURIComponent(v[1])
   })
 })
 </script>
