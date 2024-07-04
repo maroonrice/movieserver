@@ -30,18 +30,18 @@ const filtered_list = computed(() => {
 
 <template>
   <PageHeader :login="true" :overlay="overlay"></PageHeader>
-    <div class="container mb-3">
-      <div class="row row-cols-1">
-        <div class="mb-3">
-          <label for="search-text" class="form-label">Search Text</label>
-          <div class="input-group">
-            <span class="input-group-text" id="search-text-icon"><i class="bi bi-search"></i></span>
-            <input type="text" class="form-control" id="search-text" v-model="search.text"/>
-          </div>
+  <div class="container mb-3">
+    <div class="row row-cols-1">
+      <div class="mb-3">
+        <label for="search-text" class="form-label">Search Text</label>
+        <div class="input-group">
+          <span class="input-group-text" id="search-text-icon"><i class="bi bi-search"></i></span>
+          <input type="text" class="form-control" id="search-text" v-model="search.text"/>
         </div>
       </div>
     </div>
-    <div class="container mb-3">
+  </div>
+  <div class="container mb-3">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <div class="col" v-for="data in filtered_list">
         <a :href="'/page/video/index.html#' + data.path" target="_blank" class="card shadow-sm">

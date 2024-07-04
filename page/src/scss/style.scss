@@ -14,3 +14,13 @@ body {
     color: white;
   }
 }
+
+.btn-chisato {
+  background-color: white;
+  color: #ff6d6d;
+  border-color: #ff6d6d;
+  &:hover, &:focus {
+    background-color: #ff6d6d;
+    color: white;
+  }
+}

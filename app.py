@@ -65,7 +65,10 @@ def file_with_session(subpath):
     if not checkSession():
         return None, 403
     mimetype, _ = mimetypes.guess_type(subpath)
-    return send_file(os.path.join(MOVIE_FILE_DIR, subpath), mimetype=mimetype)
+    file = os.path.join(MOVIE_FILE_DIR, subpath)
+    if os.path.isfile(file):
+        return send_file(file, mimetype=mimetype)
+    return "", 404
 
 def movieinfo(dirname: str) -> dict:
     image = os.path.join(MOVIE_FILE_DIR, dirname, 'thumb.png')
