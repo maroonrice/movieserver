@@ -38,15 +38,34 @@ function seek(time: number) {
   }
 }
 
+function convertTimeDisplay(time: number) {
+  const hour = Math.floor(time / 3600)
+  const minute = Math.floor(time / 60) % 60
+  const second = time % 60
+  const strarr = []
+  if (hour > 0) {
+    strarr.push(hour + "時間")
+  }
+  if (minute > 0) {
+    strarr.push(minute + "分")
+  }
+  if (second > 0 || strarr.length == 0) {
+    strarr.push(second + "秒")
+  }
+  return strarr.join("")
+}
+
 const videoData = reactive(new VideoData())
 </script>
 
 <template>
   <video id="video" controls autoplay></video>
-  <div class="container mt-3" v-if="videoData.playlist.length > 0">
-    <div class="row">
-      <div class="col">
-        <button v-for="fetch in videoData.playlist" type="button" class="btn btn-chisato mb-3 me-3" @click="seek(fetch.time)">{{ fetch.name }}</button>
+  <div class="container mt-2 mb-3" v-if="videoData.playlist.length > 0">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col" v-for="fetch in videoData.playlist">
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-chisato text-truncate" @click="seek(fetch.time)">{{ convertTimeDisplay(fetch.time) }}：{{ fetch.name }}</button>
+        </div>
       </div>
     </div>
   </div>
