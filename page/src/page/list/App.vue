@@ -24,7 +24,10 @@ onMounted(async () => {
 })
 
 const filtered_list = computed(() => {
-  return search.list.filter(data => data.name.indexOf(search.text) > -1)
+  const splited = search.text.split(/[ 　]/)
+  return search.list.filter(data => {
+    return splited.filter(word => data.name.indexOf(word) > -1).length == splited.length
+  })
 })
 </script>
 
