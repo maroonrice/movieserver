@@ -56,6 +56,11 @@ addMock('/api/session', 'GET', async (req: any, res: any) => {
   res.writeHead(200, {'Content-Type': 'application/json'})
   res.write(JSON.stringify({'name': 'dummy name'}))
 })
+addMock('/api/disk', 'GET', async (req: any, res: any) => {
+  await sleep(300)
+  res.writeHead(200, {'Content-Type': 'application/json'})
+  res.write(JSON.stringify({'total':239098617856, 'used':159811612672, 'free':79287005184}))
+})
 
 /* Mock記述エリア */
 

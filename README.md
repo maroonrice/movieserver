@@ -34,3 +34,7 @@ ffmpeg -i 動画ファイル -c:v copy -c:a copy -f hls -hls_time 9 -hls_playlis
 ```
 ffmpeg -ss 1 -i 動画ファイル -frames:v 1 thumb.png
 ```
+
+```
+ffmpeg -i video.m3u8 -c:v libx264 -preset medium -crf 32 -c:a aac -b:a 128k -hls_list_size 0 low\video.m3u8
+```

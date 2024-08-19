@@ -10,6 +10,7 @@ from jwt.algorithms import RSAAlgorithm
 import json
 from cryptography.hazmat.primitives import serialization
 import configparser
+import shutil
 
 app = Flask(__name__, static_folder=None)
 app.config['JSON_AS_ASCII'] = False
@@ -83,6 +84,11 @@ def api_files():
         return {}, 403
     files = os.listdir(MOVIE_FILE_DIR)
     return [movieinfo(f) for f in files if os.path.isdir(os.path.join(MOVIE_FILE_DIR, f))]
+
+@app.route('/api/disk', methods=['GET'])
+def api_disk():
+    disk = shutil.disk_usage(MOVIE_FILE_DIR)
+    return {'total':disk.total, 'used': disk.used, 'free': disk.free}
 
 @app.route('/api/login', methods=['GET'])
 def api_login():
